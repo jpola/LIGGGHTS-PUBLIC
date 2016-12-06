@@ -891,12 +891,32 @@ void FixWallGran::post_force_primitive(int vflag)
 
     if(!(mask[iPart] & groupbit)) continue;
 
+    // JPA: deltan to odległość punktu na powierzchni sfery od ścianki
     deltan = primitiveWall_->resolveContact(x_[iPart],radius_?radius_[iPart]:r0_,delta);
 
+    std::cout << "PWall deltan: " << deltan;
+    std::cout << "\tradius: " << radius[iPart];
+    std::cout << "\tOneMinusDistanceFactor: " << OneMinusContactDistanceFactor;
+    std::cout << " cutneigh max: " << cutneighmax_ << std::endl;
+    std::cout << "\n x: " << x_[iPart][0] << " r: " << (radius_?radius_[iPart]:r0_)
+              << " delta: " << delta[0] << ", " << delta[1] << ", " << delta[2] << std::endl;
+
+
+
+
+//         << " first flag: "  << std::boolalpha << (deltan > cutneighmax_)
+//         << " second flag: " << std::boolalpha << (deltan <= 0)
+//         << " third flag: "  << std::boolalpha << (deltan < OneMinusContactDistanceFactor*radius[iPart])
+//         << " s + t: "       << std::boolalpha  << ((deltan <= 0) || (deltan < OneMinusContactDistanceFactor*radius[iPart]))
+//         << std::endl;
+
+    // JPA: cutneighmax_ = (ri + rj) + skin
     if(deltan>cutneighmax_) continue;
 
     if(deltan <= 0 || deltan < OneMinusContactDistanceFactor*radius[iPart])
     {
+     // JPA: by that we calculate only intersections
+        // the surface close is never calculated
       // spheres
       bool intersectflag = (deltan <= 0);
 

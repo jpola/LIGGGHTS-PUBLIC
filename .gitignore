@@ -1,6 +1,9 @@
 *.o
 *.d
 *.a
+*.autosave
 src/lmp_fedora_fpic_debug
+src/lmp_fedora_fpic
 src/src/Obj_fedora_fpic
 src/Obj_fedora_fpic/
+

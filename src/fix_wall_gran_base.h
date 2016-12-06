@@ -226,6 +226,7 @@ public:
     }
     else
     {
+        cout << "Surface close:" << endl;
        // apply force update only if selected contact models have requested it
        sidata.has_force_update = false;
        cmodel.surfacesClose(sidata, i_forces, j_forces);

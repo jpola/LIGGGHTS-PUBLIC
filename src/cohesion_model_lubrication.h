@@ -91,32 +91,34 @@ public:
     void registerSettings(Settings &settings)
     {
 
-        //define my settings like nu, cuttoff
-        cout << "LUBE: registerSettings" << endl;
-        cout << "\n LUBE: Warning! Be sure that mu is set up correctly!" << endl;
+//        //define my settings like nu, cuttoff
+//        cout << "LUBE: registerSettings" << endl;
+//        cout << "\n LUBE: Warning! Be sure that mu is set up correctly!" << endl;
 
-        //TODO:: Define params here? Or in the fix/property which is more restrictive
+//        //TODO:: Define params here? Or in the fix/property which is more restrictive
 
-        settings.registerDoubleSetting("mu", mu, 2.0);
-        settings.registerDoubleSetting("cutoff", cutoff_distance, 1.e-2);
+//        settings.registerDoubleSetting("mu", mu, 10.0);
+//        settings.registerDoubleSetting("cutoff", cutoff_distance, 10);
 
     }
 
     void connectToProperties(PropertyRegistry &registry)
     {
+
+
+
+
+        //Property registry is dedicated to read from fix/property options;
+        registry.registerProperty("mu", &MODEL_PARAMS::createFluidDynamicViscosity);
+        registry.registerProperty("cutoff", &MODEL_PARAMS::createCutoffDistance);
+
+        registry.connect("mu", mu, "cohesion_model lubrication");
+        registry.connect("cutoff", cutoff_distance, "cohesion_model lubrication");
+
         cout << "LUBE: connectToProperties" << endl;
         cout << "LUBE: the mu : " << mu << endl;
         cout << "LUBE: the cutoff_distance : " << cutoff_distance << endl;
 
-
-        /**
-        //Property registry is dedicated to read from fix/property options;
-        registry.registerProperty("mu", &MODEL_PARAMS::createFluidDynamicViscosity);
-        registry.registerProperty("cutoff", &MODEL_PARAMS::createFluidDynamicViscosity);
-
-        registry.connect("mu", mu, "cohesion_model lubrication");
-        registry.connect("cutoff", cutoff_distance, "cohesion_model lubrication");
-        */
     }
 
     void surfacesIntersect(SurfacesIntersectData &sidata, ForceData &i_forces, ForceData &j_forces)
@@ -128,7 +130,7 @@ public:
              << "\t("
              << sidata.en[0] << ", "
              << sidata.en[1] << ", "
-             << sidata.en[2] << ") "<< endl;
+             << sidata.en[2] << ") with mu "<< mu << " and cutoff " << cutoff_distance << endl;
 
     }
 
