@@ -1,0 +1,6 @@
+*.o
+*.d
+*.a
+src/lmp_fedora_fpic_debug
+src/src/Obj_fedora_fpic
+src/Obj_fedora_fpic/

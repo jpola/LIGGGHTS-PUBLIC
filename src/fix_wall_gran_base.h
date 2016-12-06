@@ -99,6 +99,10 @@ public:
   }
 
   virtual void settings(int nargs, char ** args) {
+      for (int i = 0; i < nargs; i++)
+      {
+          cout << args[i] << endl;
+      }
     Settings settings(lmp);
     cmodel.registerSettings(settings);
     bool success = settings.parseArguments(nargs, args);
@@ -128,7 +132,7 @@ public:
       torque[coord] += forces.delta_torque[coord];
     }
   }
-
+    //JPA: Potential place for calculation cohesion
   virtual void compute_force(FixWallGran * wg, SurfacesIntersectData & sidata, bool intersectflag,double *vwall, class FixMeshSurface * fix_mesh = 0, int iMesh = 0, class TriMesh *mesh = 0,int iTri = 0)
   {
     const int ip = sidata.i;

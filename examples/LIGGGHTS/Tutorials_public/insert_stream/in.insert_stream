@@ -11,7 +11,7 @@ units		si
 region		reg block -1 1 -1 1 -0.05 2.85 units box
 create_box	1 reg
 
-neighbor	0.01 bin
+neighbor	0.001 bin
 neigh_modify	delay 0
 
 
