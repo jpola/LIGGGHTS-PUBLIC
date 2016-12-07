@@ -220,13 +220,12 @@ public:
     if (intersectflag)
     {
        cmodel.surfacesIntersect(sidata, i_forces, j_forces);
-       cmodel.endSurfacesIntersect(sidata,mesh);
+       cmodel.endSurfacesIntersect(sidata, mesh);
        // if there is a surface touch, there will always be a force
        sidata.has_force_update = true;
     }
     else
     {
-        cout << "Surface close:" << endl;
        // apply force update only if selected contact models have requested it
        sidata.has_force_update = false;
        cmodel.surfacesClose(sidata, i_forces, j_forces);

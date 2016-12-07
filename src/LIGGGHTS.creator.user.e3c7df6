@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.1.0, 2016-12-07T18:00:42. -->
+<!-- Written by QtCreator 4.1.0, 2016-11-30T08:32:24. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{ad51842d-1d94-447e-85ec-cdeb5d735fad}</value>
+  <value type="QByteArray">{e3c7df61-19c5-4c94-b3f7-ac9eb492b588}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -70,8 +70,8 @@
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
-      <value type="QString" key="ProjectExplorer.ProcessStep.Arguments">fedora_fpic_debug</value>
-      <value type="QString" key="ProjectExplorer.ProcessStep.Command">make</value>
+      <value type="QString" key="ProjectExplorer.ProcessStep.Arguments"></value>
+      <value type="QString" key="ProjectExplorer.ProcessStep.Command">/home/jpola/CFDEM/CFDEMcoupling-PUBLIC-2.4.0/src/lagrangian/cfdemParticle/etc/compileLIGGGHTS.sh</value>
       <value type="QString" key="ProjectExplorer.ProcessStep.WorkingDirectory">%{buildDir}</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Custom Process Step</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
@@ -152,10 +152,10 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Arguments">&lt; in.liggghts</value>
-    <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Executable">/home/jpola/LIGGGHTS/LIGGGHTS-PUBLIC/src/lmp_fedora_fpic_debug</value>
-    <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.WorkingDirectory">/home/jpola/Simulations/Lubrication-DEMonly/dev</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run /home/jpola/LIGGGHTS/LIGGGHTS-PUBLIC/src/lmp_fedora_fpic_debug</value>
+    <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Arguments">&lt; in.meshGran</value>
+    <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Executable">lmp_fedora_fpic_debug</value>
+    <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.WorkingDirectory">/media/storage/jpola/3dsmax-fractures/Meshes/2dfrac2/DEM/mesh</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run lmp_fedora_fpic_debug</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.CustomExecutableRunConfiguration</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
