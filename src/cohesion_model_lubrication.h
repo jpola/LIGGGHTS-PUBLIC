@@ -111,16 +111,16 @@ public:
     registry.connect("etaEff", eta_eff, "cohesion_model lubrication");
 
 
-    cout << "LUBE: connectToProperties" << endl;
-    cout << "LUBE: the mu : " << mu << endl;
-    cout << "LUBE: the cutoff_distance : " << cutoff_distance << endl;
-    cout << "LUBE: the effective roughness : " << eta_eff << endl;
+//    cout << "LUBE: connectToProperties" << endl;
+//    cout << "LUBE: the mu : " << mu << endl;
+//    cout << "LUBE: the cutoff_distance : " << cutoff_distance << endl;
+//    cout << "LUBE: the effective roughness : " << eta_eff << endl;
 
   }
 
   void surfacesIntersect(SurfacesIntersectData &sidata, ForceData &i_forces, ForceData &j_forces)
   {
-    cout << "Lubrication intersection: does nothing " << endl;
+    //cout << "Lubrication intersection: does nothing " << endl;
   }
 
   void beginPass(SurfacesIntersectData&, ForceData&, ForceData&){}
@@ -145,11 +145,11 @@ public:
 
     if (dist >= R / 2.0)
     {
-      cout << "Particle is too far from wall dist = " << dist << " R/2 = " <<  R/2.0 << " we dont want to calculate" << endl;
+      //cout << "Particle is too far from wall dist = " << dist << " R/2 = " <<  R/2.0 << " we dont want to calculate" << endl;
       return;
     }
 
-    cout << "Particles approaching to wall distance is ok dist = " << dist << " R/2 = " <<  R/2.0 << endl;
+    //cout << "Particles approaching to wall distance is ok dist = " << dist << " R/2 = " <<  R/2.0 << endl;
 
     const double rEff = radi;
 
@@ -206,7 +206,7 @@ public:
 
     const double Fn = stokesPreFactor * vn * deltaijInv;
 
-    cout << "FN: " << Fn  << " at distance " << (dist + (eta_eff*R))<< endl;
+    //cout << "FN: " << Fn  << " at distance " << (dist + (eta_eff*R))<< endl;
 
     const double fx = Fn * enx;
     const double fy = Fn * eny;
@@ -218,16 +218,11 @@ public:
     i_forces.delta_F[0] += fx;
     i_forces.delta_F[1] += fy;
     i_forces.delta_F[2] += fz;
-//  i_forces.delta_torque[0] = -radi * tor1; // using radius here, not contact radius
-//  i_forces.delta_torque[1] = -radi * tor2;
-//  i_forces.delta_torque[2] = -radi * tor3;
 
     j_forces.delta_F[0] -= fx;
     j_forces.delta_F[1] -= fy;
     j_forces.delta_F[2] -= fz;
-//  j_forces.delta_torque[0] = -radj * tor1; // using radius here, not contact radius
-//  j_forces.delta_torque[1] = -radj * tor2;
-//  j_forces.delta_torque[2] = -radj * tor3;
+
   }
 
   void particlesClose(SurfacesCloseData& scdata, ForceData& i_forces, ForceData& j_forces)
@@ -257,11 +252,11 @@ public:
     }
     if (dist >= R / 2.0)
     {
-      cout << "Particles are too far dist = " << dist << " R/2 = " <<  R/2.0 << " we dont want to calculate" << endl;
+      //cout << "Particles are too far dist = " << dist << " R/2 = " <<  R/2.0 << " we dont want to calculate" << endl;
       return;
     }
 
-    cout << "LUBE: Particles are approaching and distance is ok dist = " << dist << " R/2 = " <<  R/2.0 << endl;
+    //cout << "LUBE: Particles are approaching and distance is ok dist = " << dist << " R/2 = " <<  R/2.0 << endl;
 
 
     const double rEff = radi*radj / (radi+radj);
@@ -325,7 +320,7 @@ public:
 
     const double Fn = stokesPreFactor * vn * deltaijInv;
 
-    cout << "FN: " << Fn  << " at distance " << (dist + (eta_eff*R))<< endl;
+    //cout << "FN: " << Fn  << " at distance " << (dist + (eta_eff*R))<< endl;
 
     const double fx = Fn * enx;
     const double fy = Fn * eny;
@@ -334,25 +329,17 @@ public:
     scdata.has_force_update = true;
 
     // return resulting forces
-    if(scdata.is_wall) {
-      cout << "WALL?"<< endl;
-    }
-    else
-    {
-      i_forces.delta_F[0] += fx;
-      i_forces.delta_F[1] += fy;
-      i_forces.delta_F[2] += fz;
-      //      i_forces.delta_torque[0] = -radi * tor1; // using radius here, not contact radius
-      //      i_forces.delta_torque[1] = -radi * tor2;
-      //      i_forces.delta_torque[2] = -radi * tor3;
 
-      j_forces.delta_F[0] -= fx;
-      j_forces.delta_F[1] -= fy;
-      j_forces.delta_F[2] -= fz;
-      //      j_forces.delta_torque[0] = -radj * tor1; // using radius here, not contact radius
-      //      j_forces.delta_torque[1] = -radj * tor2;
-      //      j_forces.delta_torque[2] = -radj * tor3;
-    }
+    //there are no changes in torque since this force act in normal direction
+    i_forces.delta_F[0] += fx;
+    i_forces.delta_F[1] += fy;
+    i_forces.delta_F[2] += fz;
+
+
+    j_forces.delta_F[0] -= fx;
+    j_forces.delta_F[1] -= fy;
+    j_forces.delta_F[2] -= fz;
+
 
   }
 
@@ -361,12 +348,10 @@ public:
 
     if (scdata.is_wall)
     {
-      cout << "Particle approaching to wall" << endl;
       wallParticleClose(scdata, i_forces, j_forces);
     }
     else
     {
-      cout << "Particle approacing to other particle" << endl;
       particlesClose(scdata, i_forces, j_forces);
     }
   }

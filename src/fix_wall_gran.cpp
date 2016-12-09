@@ -812,33 +812,38 @@ void FixWallGran::post_force_mesh(int vflag)
 #else
                 deltan = mesh->resolveTriSphereContactBary(iPart,iTri,radius_ ? radius_[iPart]:r0_ ,x_[iPart],delta,bary,barysign);
 #endif
+                //similarly as for post_force_primitive whe have to change this a bit.
+                double distancesq = delta[0]*delta[0] + delta[1]*delta[1] + delta[2]*delta[2];
 
-                if(deltan > cutneighmax_) continue;
+                // check if we are not to far to calculate
+                if(distancesq > cutneighmax_*cutneighmax_) continue;
 
-                if(deltan <= 0 || (radius && deltan < OneMinusContactDistanceFactor*radius[iPart]))
+                // this condition doesn't make sense for particle approaching the wall
+                // since we are letting deltan <= 0 or something strange
+                //if(deltan <= 0 || (radius && deltan < OneMinusContactDistanceFactor*radius[iPart]))
+                //{
+
+                bool intersectflag = (deltan <= 0);
+                if(fix_contact && ! fix_contact->handleContact(iPart,idTri,sidata.contact_history,intersectflag,7 == barysign)) continue;
+
+                if(vMeshC)
                 {
-
-                    bool intersectflag = (deltan <= 0);
-                    if(fix_contact && ! fix_contact->handleContact(iPart,idTri,sidata.contact_history,intersectflag,7 == barysign)) continue;
-
-                    if(vMeshC)
-                    {
-                        for(int i = 0; i < 3; i++)
-                            v_wall[i] = (bary[0]*vMesh[iTri][0][i] + bary[1]*vMesh[iTri][1][i] + bary[2]*vMesh[iTri][2][i]);
-                    }
-                    sidata.i = iPart;
-                    sidata.deltan   = -deltan;
-                    sidata.delta[0] = -delta[0];
-                    sidata.delta[1] = -delta[1];
-                    sidata.delta[2] = -delta[2];
-                    if(impl)
-                        impl->compute_force(this, sidata, intersectflag,v_wall,FixMesh_list_[iMesh],iMesh,mesh,iTri);
-                    else
-                    {
-                        sidata.r =  r0_ - sidata.deltan;
-                        compute_force(sidata, v_wall); // LEGACY CODE (SPH)
-                    }
+                    for(int i = 0; i < 3; i++)
+                        v_wall[i] = (bary[0]*vMesh[iTri][0][i] + bary[1]*vMesh[iTri][1][i] + bary[2]*vMesh[iTri][2][i]);
                 }
+                sidata.i = iPart;
+                sidata.deltan   = -deltan;
+                sidata.delta[0] = -delta[0];
+                sidata.delta[1] = -delta[1];
+                sidata.delta[2] = -delta[2];
+                if(impl)
+                    impl->compute_force(this, sidata, intersectflag,v_wall,FixMesh_list_[iMesh],iMesh,mesh,iTri);
+                else
+                {
+                    sidata.r =  r0_ - sidata.deltan;
+                    compute_force(sidata, v_wall); // LEGACY CODE (SPH)
+                }
+                //}
             }
         }
 
