@@ -73,6 +73,7 @@ inline static ScalarProperty* createEffectiveRoughness(PropertyRegistry &registr
   return effectiveRoughness;
 }
 
+
 }
 
 namespace LIGGGHTS {
@@ -143,11 +144,12 @@ public:
 
     double R = radi;
 
-    if (dist >= R / 2.0)
-    {
-      //cout << "Particle is too far from wall dist = " << dist << " R/2 = " <<  R/2.0 << " we dont want to calculate" << endl;
-      return;
-    }
+    // Restriction to R/2 gives not quite good results. Particle accelerates in close proximity.
+//    if (dist >= R / 2.0)
+//    {
+//      //cout << "Particle is too far from wall dist = " << dist << " R/2 = " <<  R/2.0 << " we dont want to calculate" << endl;
+//      return;
+//    }
 
     //cout << "Particles approaching to wall distance is ok dist = " << dist << " R/2 = " <<  R/2.0 << endl;
 
@@ -206,8 +208,7 @@ public:
 
     const double Fn = stokesPreFactor * vn * deltaijInv;
 
-    //cout << "FN: " << Fn  << " at distance " << (dist + (eta_eff*R))<< endl;
-
+    cout << "FN: " << Fn  << " at distance " << (dist + (eta_eff*R)) << " with vn " << vn << endl;
     const double fx = Fn * enx;
     const double fy = Fn * eny;
     const double fz = Fn * enz;
@@ -250,11 +251,12 @@ public:
     {
       R = radi;
     }
-    if (dist >= R / 2.0)
-    {
-      //cout << "Particles are too far dist = " << dist << " R/2 = " <<  R/2.0 << " we dont want to calculate" << endl;
-      return;
-    }
+     // Restriction to R/2 gives not quite good results. Particle accelerates in close proximity.
+//    if (dist >= R / 2.0)
+//    {
+//      //cout << "Particles are too far dist = " << dist << " R/2 = " <<  R/2.0 << " we dont want to calculate" << endl;
+//      return;
+//    }
 
     //cout << "LUBE: Particles are approaching and distance is ok dist = " << dist << " R/2 = " <<  R/2.0 << endl;
 
