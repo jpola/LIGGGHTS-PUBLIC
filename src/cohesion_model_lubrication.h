@@ -208,7 +208,7 @@ public:
 
     const double Fn = stokesPreFactor * vn * deltaijInv;
 
-    cout << "FN: " << Fn  << " at distance " << (dist + (eta_eff*R)) << " with vn " << vn << endl;
+    //cout << "FN: " << Fn  << " at distance " << (dist + (eta_eff*R)) << " with vn " << vn << endl;
     const double fx = Fn * enx;
     const double fy = Fn * eny;
     const double fz = Fn * enz;
