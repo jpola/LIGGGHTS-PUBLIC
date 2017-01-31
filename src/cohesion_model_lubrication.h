@@ -68,7 +68,9 @@ inline static ScalarProperty* createCutoffDistance(PropertyRegistry &registry, c
 
 inline static ScalarProperty* createEffectiveRoughness(PropertyRegistry &registry, const char *caller, bool sanity_checks)
 {
-  //JPA: Joseph et al. 2001 eta/R = etaEff = [10e-6, 10e-3]
+  // JPA: Joseph et al. 2001 eta/R = [10e-6, 10e-3]
+  // EtaEff stands for effective roughness height accounting 
+  // for the mean height of surface asperities of real particles characterized by eta.
   ScalarProperty* effectiveRoughness = MODEL_PARAMS::createScalarProperty(registry, "etaEff", caller, sanity_checks, 1e-6, 1e-3);
   return effectiveRoughness;
 }
@@ -108,7 +110,8 @@ public:
     registry.registerProperty("etaEff", &MODEL_PARAMS::createEffectiveRoughness);
 
     registry.connect("mu", mu, "cohesion_model lubrication");
-    registry.connect("cutoff", cutoff_distance, "cohesion_model lubrication");
+    //cutoff is not used for now
+    registry.connect("cutoff", cutoff_distance, "cohesion_model lubrication"); 
     registry.connect("etaEff", eta_eff, "cohesion_model lubrication");
 
 
@@ -203,7 +206,7 @@ public:
 
     // JPA: here we should add eta even if the particles are not intersecting?
     //const double deltaijInv = 1.0 / MathExtraLiggghts::max(dist, cutoff_distance) ;
-    const double deltaijInv = 1.0 / (dist + (eta_eff*R));
+    const double deltaijInv = 1.0 / (dist + eta_eff);
 
 
     const double Fn = stokesPreFactor * vn * deltaijInv;
@@ -317,7 +320,7 @@ public:
 
     // JPA: here we should add eta even if the particles are not intersecting?
     //const double deltaijInv = 1.0 / MathExtraLiggghts::max(dist, cutoff_distance) ;
-    const double deltaijInv = 1.0 / (dist + (eta_eff*R));
+    const double deltaijInv = 1.0 / (dist + eta_eff);
 
 
     const double Fn = stokesPreFactor * vn * deltaijInv;
